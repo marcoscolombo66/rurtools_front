@@ -153,14 +153,26 @@ function crearHTMLCategoria(categoria) {
 async function generarEstructura() {
     try {
         // Obtener categorías de la API
+        console.log('Obteniendo categorías...');
         const response = await fetch(`${API_BASE_URL}/Categorias`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            timeout: 10000
         });
 
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
+        }
+
         const categorias = await response.json();
+        if (!Array.isArray(categorias) || categorias.length === 0) {
+            console.error('No se encontraron categorías o formato incorrecto:', categorias);
+            return;
+        }
+
+        console.log(`Se encontraron ${categorias.length} categorías para procesar`);
 
         // Crear carpeta base si no existe
         const basePath = path.join(__dirname, '..', 'pages', 'ver-productos');
@@ -170,23 +182,29 @@ async function generarEstructura() {
 
         // Crear carpetas y archivos para cada categoría
         for (const categoria of categorias) {
-            const nombreCarpeta = `${categoria.idCategoria}-${categoria.nombreCategoria.toLowerCase().replace(/\s+/g, '-')}`;
-            const rutaCategoria = path.join(basePath, nombreCarpeta);
+            try {
+                console.log(`Procesando categoría: ${categoria.nombreCategoria} (ID: ${categoria.idCategoria})`);
+                const nombreCarpeta = `${categoria.idCategoria}-${categoria.nombreCategoria.toLowerCase().replace(/\s+/g, '-')}`;
+                const rutaCategoria = path.join(basePath, nombreCarpeta);
 
-            // Crear carpeta de categoría
-            if (!fs.existsSync(rutaCategoria)) {
-                fs.mkdirSync(rutaCategoria, { recursive: true });
-            }
+                // Crear carpeta de categoría
+                if (!fs.existsSync(rutaCategoria)) {
+                    fs.mkdirSync(rutaCategoria, { recursive: true });
+                }
 
-            // Crear archivo index.html
-            const contenidoHTML = crearHTMLCategoria(categoria);
-            fs.writeFileSync(path.join(rutaCategoria, 'index.html'), contenidoHTML);
-            console.log(`Creada categoría: ${categoria.nombreCategoria}`);
-            
-            // Crear carpeta para productos de esta categoría
-            const rutaProductos = path.join(basePath, 'producto');
-            if (!fs.existsSync(rutaProductos)) {
-                fs.mkdirSync(rutaProductos, { recursive: true });
+                // Crear archivo index.html
+                const contenidoHTML = crearHTMLCategoria(categoria);
+                fs.writeFileSync(path.join(rutaCategoria, 'index.html'), contenidoHTML);
+                console.log(`Creada categoría: ${categoria.nombreCategoria} en ${rutaCategoria}`);
+                
+                // Crear carpeta para productos de esta categoría
+                const rutaProductos = path.join(basePath, 'producto');
+                if (!fs.existsSync(rutaProductos)) {
+                    fs.mkdirSync(rutaProductos, { recursive: true });
+                }
+            } catch (error) {
+                console.error(`Error al procesar la categoría ${categoria.nombreCategoria}:`, error);
+                // Continuar con la siguiente categoría
             }
         }
 
