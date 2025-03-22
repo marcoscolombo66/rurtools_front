@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <!-- seo -->
+    <title>Lüsqtoff - Producto</title>
+    <meta content="" name="description"/>
+    <meta content="" name="keyword"/>
+    <!-- favicon -->
+    <link href="/2023/pics/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="/2023/pics/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="/2023/pics/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="/2023/pics/favicon/site.webmanifest" rel="manifest"/>
+    <link color="#5bbad5" href="/2023/pics/favicon/safari-pinned-tab.svg" rel="mask-icon"/>
+    <meta content="#da532c" name="msapplication-TileColor"/>
+    <meta content="#ffffff" name="theme-color"/>
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="/css/css2" rel="stylesheet"/>
+    <!-- font-awesome -->
+    <link href="/css/fontawesome.min.css" rel="stylesheet"/>
+    <link href="/css/brands.min.css" rel="stylesheet"/>
+    <link href="/css/solid.min.css" rel="stylesheet"/>
+    <!-- css -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/fancybox.css" rel="stylesheet"/>
+    <link href="/css/flickity.css" rel="stylesheet"/>
+    <link href="/css/swiper-bundle.min.css" rel="stylesheet"/>
+    <link href="/css/common.min.css" rel="stylesheet"/>
+    <!-- js -->
+    <script src="/js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Obtener el ID del producto de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const productoId = urlParams.get('id');
+            
+            if (!productoId) {
+                console.error('No se especificó un producto');
+                return;
+            }
+
+            try {
+                // Obtener los detalles del producto
+                const producto = await api.getProducto(productoId);
+
+                if (producto) {
+                    // Actualizar el título de la página
+                    document.title = `${producto.nombre} - Lüsqtoff`;
+                    
+                    // Actualizar el contenido
+                    document.querySelector('.producto-titulo').textContent = producto.nombre;
+                    document.querySelector('.producto-imagen').style.backgroundImage = `url('${producto.imagen || '/images2/images/logo_rur.png'}')`;
+                    document.querySelector('.producto-sku').textContent = `SKU: ${producto.sku}`;
+                    
+                    // Actualizar ficha técnica si existe
+                    if (producto.fichaTecnica) {
+                        document.querySelector('.ficha-tecnica').innerHTML = producto.fichaTecnica;
+                    }
+
+                    // Actualizar descripción si existe
+                    if (producto.descripcion) {
+                        document.querySelector('.producto-descripcion').innerHTML = producto.descripcion;
+                    }
+
+                    // Actualizar especificaciones si existen
+                    if (producto.especificaciones) {
+                        document.querySelector('.producto-specs').innerHTML = producto.especificaciones;
+                    }
+                } else {
+                    document.querySelector('.producto-contenido').innerHTML = '<div class="alert alert-warning">Producto no encontrado</div>';
+                }
+            } catch (error) {
+                console.error('Error al cargar el producto:', error);
+            }
+        });
+    </script>
+</head>
+<body>
+    <!-- header -->
+    <header>
+        <a class="brand" href="/home">
+            <img alt="Lusqtoff" class="img-fluid" src="/images/lusqtoff-logo-2024.svg"/>
+        </a>
+        <!-- nav -->
+        <nav>
+            <a href="/pages/ver-productos/index.html">Productos</a>
+            <a href="/pages/donde-comprar/index.html">Dónde comprar</a>
+            <a href="/pages/servicios-tecnicos/index.html">Servicios técnicos</a>
+            <a href="http://b2blusqtoff.kiri.cc" target="_blank">Ingreso clientes</a>
+            <a href="/capacitaciones">Capacitaciones</a>
+            <a href="/nosotros">Nosotros</a>
+            <button class="btn-nav" type="button">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <button class="btn-search" type="button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- product -->
+    <section class="section bg-orange">
+        <div class="container producto-contenido">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="producto-imagen"></div>
+                </div>
+                <div class="col-md-6">
+                    <h1 class="producto-titulo color-white"></h1>
+                    <div class="producto-sku color-white"></div>
+                    <div class="producto-descripcion color-white mt-4"></div>
+                </div>
+            </div>
+            
+            <!-- Especificaciones -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Especificaciones</h3>
+                        </div>
+                        <div class="card-body producto-specs">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ficha Técnica -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Ficha Técnica</h3>
+                        </div>
+                        <div class="card-body ficha-tecnica">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-lg-3">
+                    <h5>Seguinos</h5>
+                    <nav class="social">
+                        <a href="https://www.instagram.com/lusqtoff/" target="_blank">
+                            <i class="fa-brands fa-instagram fa-fw"></i>
+                            Instagram
+                        </a>
+                        <a href="https://www.facebook.com/lusqtoff/" target="_blank">
+                            <i class="fa-brands fa-facebook fa-fw"></i>
+                            Facebook
+                        </a>
+                        <a href="https://www.youtube.com/user/Lusqtoff" target="_blank">
+                            <i class="fa-brands fa-youtube fa-fw"></i>
+                            Youtube
+                        </a>
+                    </nav>
+                </div>
+                <div class="col-md-8 col-lg-6">
+                    <h5>Contacto</h5>
+                    <p><a href="mailto:info@lusqtoff.com.ar">info@lusqtoff.com.ar</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- js -->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/fancybox.umd.js"></script>
+    <script src="/js/flickity.pkgd.min.js"></script>
+    <script src="/js/swiper-bundle.min.js"></script>
+    <script src="/js/matchHeight-min.js"></script>
+    <script src="/js/common.js"></script>
+</body>
+</html> 

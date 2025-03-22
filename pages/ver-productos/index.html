@@ -52,13 +52,136 @@
 
       gtag('config', 'G-Z9QC1CBCH6');
   </script>
+  <script src="/js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            console.log('Cargando categorías...');
+            const categorias = await api.getCategorias();
+            const contenedor = document.querySelector('.row.justify-content-center');
+            
+            if (!categorias || categorias.length === 0) {
+                contenedor.innerHTML = '<div class="col-12 text-center"><p>No hay categorías disponibles</p></div>';
+                return;
+            }
+
+            contenedor.innerHTML = categorias.map(categoria => `
+                <div class="col-6 col-lg-4 col-xl-3">
+                    <a class="cat-link" href="#" onclick="cargarProductos('${categoria.idCategoria}', '${categoria.nombreCategoria}'); return false;">
+                        <div class="image" style="background-image:url('${categoria.imagen || '/images2/images/logo_rur.png'}');">
+                        </div>
+                        <div class="name">
+                            ${categoria.nombreCategoria}
+                        </div>
+                        <div class="dots">
+                        </div>
+                    </a>
+                </div>
+            `).join('');
+
+            // Si estamos buscando detergentes, cargarlos automáticamente
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('categoria') === 'detergentes') {
+                const categoriaDetergentes = categorias.find(cat => cat.nombreCategoria.toLowerCase() === 'detergentes');
+                if (categoriaDetergentes) {
+                    cargarProductos(categoriaDetergentes.idCategoria, categoriaDetergentes.nombreCategoria);
+                }
+            }
+        } catch (error) {
+            console.error('Error al cargar categorías:', error);
+            const contenedor = document.querySelector('.row.justify-content-center');
+            contenedor.innerHTML = '<div class="col-12 text-center"><p>Error al cargar las categorías</p></div>';
+        }
+    });
+
+    window.cargarProductos = async function(categoriaId, nombreCategoria) {
+        try {
+            console.log('Cargando productos de la categoría:', nombreCategoria, 'ID:', categoriaId);
+            const productos = await api.getProductosPorCategoria(categoriaId);
+            const contenedor = document.querySelector('.row.justify-content-center');
+            const titulo = document.querySelector('h1.color-white');
+            titulo.textContent = nombreCategoria;
+            
+            console.log('Productos recibidos:', productos);
+            
+            // Filtrar productos por categoría
+            const productosFiltrados = productos.filter(producto => {
+                console.log('Comparando:', producto.idCategoria, categoriaId, producto.idCategoria === categoriaId);
+                return String(producto.idCategoria) === String(categoriaId);
+            });
+            
+            console.log('Productos filtrados:', productosFiltrados);
+            
+            if (!productosFiltrados || productosFiltrados.length === 0) {
+                contenedor.innerHTML = '<div class="col-12 text-center"><p>No hay productos disponibles en esta categoría</p></div>';
+                return;
+            }
+
+            contenedor.innerHTML = productosFiltrados.map(producto => `
+                <div class="col-6 col-lg-4 col-xl-3">
+                    <a class="prod-link" href="#" onclick="mostrarProducto('${producto.idProducto}'); return false;">
+                        <div class="image" style="background-image:url('/images2/images/${producto.fotoProducto || 'logo_rur.png'}');">
+                        </div>
+                        <div class="name" data-mh="product">
+                            ${producto.nombreProducto || 'Sin nombre'}
+                        </div>
+                        <div class="sku">
+                            ${producto.SKUCode || ''}
+                        </div>
+                        <div class="dots">
+                        </div>
+                        <div class="overlay">
+                            <div class="specs">
+                                ${producto.descripcionProducto || ''}
+                            </div>
+                            <div class="btn btn-sm btn-outline-light">
+                                Ver producto
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error al cargar productos:', error);
+            const contenedor = document.querySelector('.row.justify-content-center');
+            contenedor.innerHTML = '<div class="col-12 text-center"><p>Error al cargar los productos</p></div>';
+        }
+    }
+
+    window.mostrarProducto = async function(productoId) {
+        try {
+            const producto = await api.getProducto(productoId);
+            if (!producto) {
+                alert('Producto no encontrado');
+                return;
+            }
+
+            const contenedor = document.querySelector('.row.justify-content-center');
+            contenedor.innerHTML = `
+                <div class="col-md-6">
+                    <div class="producto-imagen" style="background-image:url('/images2/images/${producto.fotoProducto || 'logo_rur.png'}');">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2 class="producto-titulo color-white">${producto.nombreProducto || 'Sin nombre'}</h2>
+                    <div class="producto-sku color-white">${producto.SKUCode ? 'SKU: ' + producto.SKUCode : ''}</div>
+                    <div class="producto-descripcion color-white mt-4">${producto.descripcionProducto || 'Sin descripción'}</div>
+                    ${producto.cantidadProducto ? `<div class="producto-stock color-white mt-2">Stock: ${producto.cantidadProducto}</div>` : ''}
+                </div>
+            `;
+        } catch (error) {
+            console.error('Error al cargar producto:', error);
+            alert('Error al cargar el producto');
+        }
+    }
+  </script>
  </head>
  <body>
   <!-- header -->
   <header>
-   <a class="brand" href="/home">
-    <img alt="Lusqtoff" class="img-fluid" src="/images/lusqtoff-logo-2024.svg"/>
-   </a>
+    <a class="brand" href="/home">
+      <img alt="logo-rurtools" class="img-fluid" src="../images2/images/logo_rur.png"/> <!-- /images/lusqtoff-logo-2024.svg -->
+     </a>
    <!-- nav -->
    <nav>
     <a href="/pages\ver-productos\index.html">
@@ -230,215 +353,7 @@
      </form>
     </div>
     <div class="row justify-content-center">
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/1-jardin-&amp;-agricola\index.html">
-       <div class="image" style="background-image:url('/images/jardin.jpg');">
-       </div>
-       <div class="name">
-        Jardín &amp; Agrícola
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/2-motores-&amp;-motobombas\index.html">
-       <div class="image" style="background-image:url('/images/cat-02.jpg');">
-       </div>
-       <div class="name">
-        Motores &amp; Motobombas
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/3-hogar-&amp;-recreacion\index.html">
-       <div class="image" style="background-image:url('/images/portadas web hogar.jpg');">
-       </div>
-       <div class="name">
-        Hogar &amp; Recreación
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/4-hidrolavadoras\index.html">
-       <div class="image" style="background-image:url('/images/cat-04.jpg');">
-       </div>
-       <div class="name">
-        Hidrolavadoras
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/5-bombas\index.html">
-       <div class="image" style="background-image:url('/images/cat-05.jpg');">
-       </div>
-       <div class="name">
-        Bombas
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/6-calefaccion\index.html">
-       <div class="image" style="background-image:url('/images/calefaccion.jpg');">
-       </div>
-       <div class="name">
-        Calefacción
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/7-equipos-de-pintura\index.html">
-       <div class="image" style="background-image:url('/images/cat-07.jpg');">
-       </div>
-       <div class="name">
-        Equipos de pintura
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/8-maquinaria-para-construccion\index.html">
-       <div class="image" style="background-image:url('/images/cat-08.jpg');">
-       </div>
-       <div class="name">
-        Maquinaria para construcción
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/9-grupos-electrogenos\index.html">
-       <div class="image" style="background-image:url('/https://lusqtoff.com.ar/2023/uploads/Categorias/Grupos%20Electr%C3%B3genos%20(1).jpg');">
-       </div>
-       <div class="name">
-        Grupos Electrógenos
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/18-black-series\index.html">
-       <div class="image" style="background-image:url('/images/portada%20para%20black1.jpg');">
-       </div>
-       <div class="name">
-        Black Series
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/10-taller-&amp;-racing\index.html">
-       <div class="image" style="background-image:url('/images/portadas%20web%20racing.jpg');">
-       </div>
-       <div class="name">
-        Taller &amp; Racing
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/11-herramientas-electricas\index.html">
-       <div class="image" style="background-image:url('/images/portadas%20web%20Herramientas%20el%C3%A9ctricas.jpg');">
-       </div>
-       <div class="name">
-        Herramientas eléctricas
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/12-herramientas-de-pie-y-banco\index.html">
-       <div class="image" style="background-image:url('/images/herramientas%20de%20banco.jpg');">
-       </div>
-       <div class="name">
-        Herramientas de pie y banco
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/13-soldadoras-inverter\index.html">
-       <div class="image" style="background-image:url('/images/portadas%20web%20Soldadoras.jpg');">
-       </div>
-       <div class="name">
-        Soldadoras Inverter
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/14-mascaras-fotosensibles\index.html">
-       <div class="image" style="background-image:url('/images/portadas%20web%20m%C3%A1scaras.jpg');">
-       </div>
-       <div class="name">
-        Máscaras fotosensibles
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/15-cortadoras-de-plasma\index.html">
-       <div class="image" style="background-image:url('/images/portadas%20web%20Cortadoras%20de%20plasma.jpg');">
-       </div>
-       <div class="name">
-        Cortadoras de plasma
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/16-compresores-de-aire\index.html">
-       <div class="image" style="background-image:url('/images/portadas%20web%20Compresores%20de%20aire.jpg');">
-       </div>
-       <div class="name">
-        Compresores de aire
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/17-herramientas-neumaticas\index.html">
-       <div class="image" style="background-image:url('/images/portadas%20web%20Herramientas%20neum%C3%A1ticas.jpg');">
-       </div>
-       <div class="name">
-        Herramientas neumáticas
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
-     <div class="col-6 col-lg-4 col-xl-3">
-      <a class="cat-link" href="/pages\ver-productos/19-herramientas-manuales\index.html">
-       <div class="image" style="background-image:url('/images/Portada%20h-%20manuales.jpg');">
-       </div>
-       <div class="name">
-        Herramientas manuales
-       </div>
-       <div class="dots">
-       </div>
-      </a>
-     </div>
+     <!-- Las categorías se cargarán dinámicamente aquí -->
     </div>
    </div>
   </section>

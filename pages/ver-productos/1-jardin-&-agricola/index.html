@@ -41,11 +41,21 @@
   <script async="" src="/js/js">
   </script>
   <script>
-   window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-Z9QC1CBCH6');
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'G-Z9QC1CBCH6');
+  </script>
+  <script src="/js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Obtener el ID de la categoría de la URL
+        const path = window.location.pathname;
+        const categoriaId = path.split('/')[3].split('-')[0];
+        
+        // Cargar productos de la categoría
+        api.renderizarProductosCategoria(categoriaId);
+    });
   </script>
  </head>
  <body>
@@ -94,13 +104,20 @@
      </path>
     </svg>
    </button>
-   <!--<div class="header">
-        <a class="brand" href="./">
-          <img src="/2023/pics/lusqtoff-logo.svg" alt="Lusqtoff" class="img-fluid" />
-        </a>
-        <a class="close-search" href="#">
-          <i class="fa-solid fa-xmark"></i>
-        </a>
+   <!--<div class="header">
+
+        <a class="brand" href="./">
+
+          <img src="/2023/pics/lusqtoff-logo.svg" alt="Lusqtoff" class="img-fluid" />
+
+        </a>
+
+        <a class="close-search" href="#">
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </a>
+
       </div>-->
    <div class="container">
     <form action="/buscar" method="get">
@@ -123,13 +140,20 @@
      </path>
     </svg>
    </button>
-   <!--<div class="header">
-        <a class="brand" href="./">
-          <img src="/2023/pics/lusqtoff-logo.svg" alt="Lusqtoff" class="img-fluid" />
-        </a>
-        <a class="close-nav" href="#">
-          <i class="fa-solid fa-xmark"></i>
-        </a>
+   <!--<div class="header">
+
+        <a class="brand" href="./">
+
+          <img src="/2023/pics/lusqtoff-logo.svg" alt="Lusqtoff" class="img-fluid" />
+
+        </a>
+
+        <a class="close-nav" href="#">
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </a>
+
       </div>-->
    <nav>
     <a class="tone-2" href="/home">
