@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://sd-1464111-h00028.ferozo.net/admin/api';
+const API_BASE_URL = 'https://sd-1464111-h00028.ferozo.net/admin/api';
 
 // Función para obtener categorías
 async function getCategorias() {
