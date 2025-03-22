@@ -2,6 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
 
+// URL base de la API
+const API_BASE_URL = 'http://sd-1464111-h00028.ferozo.net/admin/api';
+
 // Función para crear el HTML de una categoría
 function crearHTMLCategoria(categoria) {
     return `<!DOCTYPE html>
@@ -150,7 +153,7 @@ function crearHTMLCategoria(categoria) {
 async function generarEstructura() {
     try {
         // Obtener categorías de la API
-        const response = await fetch('http://sd-1464111-h00028.ferozo.net/admin/api/Categorias', {
+        const response = await fetch(`${API_BASE_URL}/Categorias`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -179,6 +182,12 @@ async function generarEstructura() {
             const contenidoHTML = crearHTMLCategoria(categoria);
             fs.writeFileSync(path.join(rutaCategoria, 'index.html'), contenidoHTML);
             console.log(`Creada categoría: ${categoria.nombreCategoria}`);
+            
+            // Crear carpeta para productos de esta categoría
+            const rutaProductos = path.join(basePath, 'producto');
+            if (!fs.existsSync(rutaProductos)) {
+                fs.mkdirSync(rutaProductos, { recursive: true });
+            }
         }
 
         console.log('Estructura generada correctamente');
