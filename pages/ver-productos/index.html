@@ -10,11 +10,11 @@
   <meta content="" name="description"/>
   <meta content="" name="keyword"/>
   <!-- favicon -->
-  <link href="/2023/pics/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-  <link href="/2023/pics/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-  <link href="/2023/pics/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-  <link href="/2023/pics/favicon/site.webmanifest" rel="manifest"/>
-  <link color="#5bbad5" href="/2023/pics/favicon/safari-pinned-tab.svg" rel="mask-icon"/>
+  <link href="../../2023/pics/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+  <link href="../../2023/pics/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+  <link href="../../2023/pics/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+  <link href="../../2023/pics/favicon/site.webmanifest" rel="manifest"/>
+  <link color="#5bbad5" href="../../2023/pics/favicon/safari-pinned-tab.svg" rel="mask-icon"/>
   <meta content="#da532c" name="msapplication-TileColor"/>
   <meta content="#ffffff" name="theme-color"/>
   <!-- opengraph -->
@@ -26,20 +26,20 @@
   <!-- fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="/css/css2" rel="stylesheet"/>
+  <link href="../../css/css2" rel="stylesheet"/>
   <!-- font-awesome -->
-  <link href="/css/fontawesome.min.css" rel="stylesheet"/>
-  <link href="/css/brands.min.css" rel="stylesheet"/>
-  <link href="/css/solid.min.css" rel="stylesheet"/>
+  <link href="../../css/fontawesome.min.css" rel="stylesheet"/>
+  <link href="../../css/brands.min.css" rel="stylesheet"/>
+  <link href="../../css/solid.min.css" rel="stylesheet"/>
   <!-- css -->
-  <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="/css/fancybox.css" rel="stylesheet"/>
-  <link href="/css/flickity.css" rel="stylesheet"/>
-  <link href="/css/swiper-bundle.min.css" rel="stylesheet"/>
-  <link href="/css/common.min.css" rel="stylesheet"/>
-  <link href="/css/whatsapp-button.css" rel="stylesheet"/>
+  <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../../css/fancybox.css" rel="stylesheet"/>
+  <link href="../../css/flickity.css" rel="stylesheet"/>
+  <link href="../../css/swiper-bundle.min.css" rel="stylesheet"/>
+  <link href="../../css/common.min.css" rel="stylesheet"/>
+  <link href="../../css/whatsapp-button.css" rel="stylesheet"/>
   <!-- Google tag (gtag.js) -->
-  <script async="" src="/js/js">
+  <script async="" src="../../js/js">
   </script>
   <script>
    window.dataLayer = window.dataLayer || [];
@@ -52,7 +52,7 @@
 
       gtag('config', 'G-Z9QC1CBCH6');
   </script>
-  <script src="/js/api.js"></script>
+  <script src="../../js/api.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
         try {
@@ -68,7 +68,7 @@
             contenedor.innerHTML = categorias.map(categoria => `
                 <div class="col-6 col-lg-4 col-xl-3">
                     <a class="cat-link" href="#" onclick="cargarProductos('${categoria.idCategoria}', '${categoria.nombreCategoria}'); return false;">
-                        <div class="image" style="background-image:url('${categoria.imagen || '/images2/images/logo_rur.png'}');">
+                        <div class="image" style="background-image:url('${categoria.imagen || '../../images2/images/logo_rur.png'}');">
                         </div>
                         <div class="name">
                             ${categoria.nombreCategoria}
@@ -90,7 +90,7 @@
         } catch (error) {
             console.error('Error al cargar categorías:', error);
             const contenedor = document.querySelector('.row.justify-content-center');
-            contenedor.innerHTML = '<div class="col-12 text-center"><p>Error al cargar las categorías</p></div>';
+            contenedor.innerHTML = '<div class="col-12 text-center"><p>Error al cargar las categorías: ' + error.message + '<br>Por favor, intente nuevamente más tarde.</p></div>';
         }
     });
 
@@ -120,7 +120,7 @@
             contenedor.innerHTML = productosFiltrados.map(producto => `
                 <div class="col-6 col-lg-4 col-xl-3">
                     <a class="prod-link" href="#" onclick="mostrarProducto('${producto.idProducto}'); return false;">
-                        <div class="image" style="background-image:url('/images2/images/${producto.fotoProducto || 'logo_rur.png'}');">
+                        <div class="image" style="background-image:url('../../images2/images/${producto.fotoProducto || 'logo_rur.png'}');">
                         </div>
                         <div class="name" data-mh="product">
                             ${producto.nombreProducto || 'Sin nombre'}
@@ -144,7 +144,7 @@
         } catch (error) {
             console.error('Error al cargar productos:', error);
             const contenedor = document.querySelector('.row.justify-content-center');
-            contenedor.innerHTML = '<div class="col-12 text-center"><p>Error al cargar los productos</p></div>';
+            contenedor.innerHTML = '<div class="col-12 text-center"><p>Error al cargar los productos: ' + error.message + '<br>Por favor, intente nuevamente más tarde.</p></div>';
         }
     }
 
@@ -159,7 +159,7 @@
             const contenedor = document.querySelector('.row.justify-content-center');
             contenedor.innerHTML = `
                 <div class="col-md-6">
-                    <div class="producto-imagen" style="background-image:url('/images2/images/${producto.fotoProducto || 'logo_rur.png'}');">
+                    <div class="producto-imagen" style="background-image:url('../../images2/images/${producto.fotoProducto || 'logo_rur.png'}');">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -171,7 +171,7 @@
             `;
         } catch (error) {
             console.error('Error al cargar producto:', error);
-            alert('Error al cargar el producto');
+            alert('Error al cargar el producto: ' + error.message);
         }
     }
   </script>
@@ -179,27 +179,27 @@
  <body>
   <!-- header -->
   <header>
-    <a class="brand" href="/home">
-      <img alt="logo-rurtools" class="img-fluid" src="../images2/images/logo_rur.png"/> <!-- /images/lusqtoff-logo-2024.svg -->
+    <a class="brand" href="../../index.html">
+      <img alt="logo-rurtools" class="img-fluid" src="../../images2/images/logo_rur.png"/>
      </a>
    <!-- nav -->
    <nav>
-    <a href="/pages\ver-productos\index.html">
+    <a href="../ver-productos/index.html">
      Productos
     </a>
-    <a href="/pages\donde-comprar\index.html">
+    <a href="../donde-comprar/index.html">
      Dónde comprar
     </a>
-    <a href="/pages\servicios-tecnicos\index.html">
+    <a href="../servicios-tecnicos/index.html">
      Servicios técnicos
     </a>
     <a href="http://b2blusqtoff.kiri.cc" target="_blank">
      Ingreso clientes
     </a>
-    <a href="/capacitaciones">
+    <a href="../capacitaciones/index.html">
      Capacitaciones
     </a>
-    <a href="/nosotros">
+    <a href="../nosotros/index.html">
      Nosotros
     </a>
     <button class="btn-nav" type="button">
@@ -274,34 +274,34 @@
 
       </div>-->
    <nav>
-    <a class="tone-2" href="/home">
+    <a class="tone-2" href="../../index.html">
      Inicio
     </a>
-    <a class="tone-3" href="/pages\ver-productos\index.html">
+    <a class="tone-3" href="../ver-productos/index.html">
      Productos
     </a>
-    <a class="tone-2" href="/pages\donde-comprar\index.html">
+    <a class="tone-2" href="../donde-comprar/index.html">
      Dónde comprar
     </a>
-    <a class="tone-4" href="/pages\servicios-tecnicos\index.html">
+    <a class="tone-4" href="../servicios-tecnicos/index.html">
      Servicios técnicos
     </a>
-    <a class="tone-3" href="/nosotros">
+    <a class="tone-3" href="../nosotros/index.html">
      Nosotros
     </a>
-    <a class="tone-5" href="/capacitaciones">
+    <a class="tone-5" href="../capacitaciones/index.html">
      Capacitaciones
     </a>
-    <a class="tone-2" href="/catalogos">
+    <a class="tone-2" href="../catalogos/index.html">
      Catálogos
     </a>
-    <a class="tone-4" href="/pages\quiero-ser-cliente\index.html">
+    <a class="tone-4" href="../quiero-ser-cliente/index.html">
      Quiero ser cliente
     </a>
-    <a class="tone-3" href="/posventa">
+    <a class="tone-3" href="../posventa/index.html">
      Posventa
     </a>
-    <a class="tone-2" href="/pages\contacto\index.html">
+    <a class="tone-2" href="../contacto/index.html">
      Contacto
     </a>
    </nav>
@@ -331,8 +331,8 @@
   <!-- ./nav-overlay -->
   <!-- section-hero -->
   <section class="section-hero bg-orange">
-   <img alt="productos" class="img-fluid d-none d-md-block" src="/images/BANNER%20WEB.jpg"/>
-   <img alt="productos" class="img-fluid d-md-none" src="/images/PORTADAS%20PARA%20CELULAR.jpg"/>
+   <img alt="productos" class="img-fluid d-none d-md-block" src="../../images/BANNER%20WEB.jpg"/>
+   <img alt="productos" class="img-fluid d-md-none" src="../../images/PORTADAS%20PARA%20CELULAR.jpg"/>
   </section>
   <!-- ./section-hero -->
   <!-- categories -->
@@ -359,7 +359,7 @@
   </section>
   <!-- ./categories -->
   <!-- banners -->
-  <section class="section wtb" style="background-image:url('/images/BANNER%20TRUPER-.jpg')">
+  <section class="section wtb" style="background-image:url('../../images/BANNER%20TRUPER-.jpg')">
    <div class="container text-center">
     <h2 class="mb-5 color-white">
     </h2>
@@ -368,22 +368,22 @@
     </a>
    </div>
   </section>
-  <section class="section wtb" style="background-image:url('/images/banner-dondecomprar.jpg')">
+  <section class="section wtb" style="background-image:url('../../images/banner-dondecomprar.jpg')">
    <div class="container text-center">
     <h2 class="mb-5 color-white">
      Encontrá dónde comprar nuestros productos
     </h2>
-    <a class="btn btn-outline-light" href="/pages\donde-comprar\index.html">
+    <a class="btn btn-outline-light" href="../donde-comprar/index.html">
      Ver mapa
     </a>
    </div>
   </section>
-  <section class="section wtb" style="background-image:url('/images/banner-serviciostecnicos.jpg')">
+  <section class="section wtb" style="background-image:url('../../images/banner-serviciostecnicos.jpg')">
    <div class="container text-center">
     <h2 class="mb-5 color-white">
      Encontrá nuestros servicios técnicos oficiales
     </h2>
-    <a class="btn btn-outline-light" href="/pages\servicios-tecnicos\index.html">
+    <a class="btn btn-outline-light" href="../servicios-tecnicos/index.html">
      Ver mapa
     </a>
    </div>
@@ -391,32 +391,32 @@
   <!-- ./banners -->
   <!-- shortcuts -->
   <section class="shortcuts">
-   <a href="/pages\quiero-ser-cliente\index.html">
-    <img alt="Quiero ser cliente" class="img-fluid" src="/images/icon-store.svg"/>
+   <a href="../quiero-ser-cliente/index.html">
+    <img alt="Quiero ser cliente" class="img-fluid" src="../../images/icon-store.svg"/>
     <span>
      Quiero ser cliente
     </span>
    </a>
-   <a href="/pages\donde-comprar\index.html">
-    <img alt="Dónde comprar" class="img-fluid" src="/images/icon-truck.svg"/>
+   <a href="../donde-comprar/index.html">
+    <img alt="Dónde comprar" class="img-fluid" src="../../images/icon-truck.svg"/>
     <span>
      Dónde comprar
     </span>
    </a>
-   <a href="/pages\sumate-al-equipo\index.html">
-    <img alt="Sumate al equipo" class="img-fluid" src="/images/icon-team.svg"/>
+   <a href="../sumate-al-equipo/index.html">
+    <img alt="Sumate al equipo" class="img-fluid" src="../../images/icon-team.svg"/>
     <span>
      Sumate al equipo
     </span>
    </a>
-   <a href="/pages\contacto\index.html">
-    <img alt="Contacto" class="img-fluid" src="/images/icon-mail.svg"/>
+   <a href="../contacto/index.html">
+    <img alt="Contacto" class="img-fluid" src="../../images/icon-mail.svg"/>
     <span>
      Contacto
     </span>
    </a>
    <a href="http://b2blusqtoff.kiri.cc/">
-    <img alt="Ingreso clientes" class="img-fluid" src="/images/icon-login.svg"/>
+    <img alt="Ingreso clientes" class="img-fluid" src="../../images/icon-login.svg"/>
     <span>
      Ingreso clientes
     </span>
@@ -427,7 +427,7 @@
   <section>
    <div class="container text-center">
     <a href="https://www.lusqtoff.com.ar/truper/" target="_blank">
-     <img alt="Truper" class="img-fluid" src="/images/truper-logo.png" width="300"/>
+     <img alt="Truper" class="img-fluid" src="../../images/truper-logo.png" width="300"/>
     </a>
    </div>
   </section>
@@ -477,41 +477,41 @@
       <div class="row">
        <div class="col-md-6">
         <nav>
-         <a href="/home">
+         <a href="../../index.html">
           Inicio
          </a>
-         <a href="/pages\ver-productos\index.html">
+         <a href="../ver-productos/index.html">
           Productos
          </a>
-         <a href="/pages\donde-comprar\index.html">
+         <a href="../donde-comprar/index.html">
           Dónde comprar
          </a>
-         <a href="/pages\servicios-tecnicos\index.html">
+         <a href="../servicios-tecnicos/index.html">
           Servicios técnicos
          </a>
-         <a href="/capacitaciones">
+         <a href="../capacitaciones/index.html">
           Capacitaciones
          </a>
-         <a href="/catalogos">
+         <a href="../catalogos/index.html">
           Catálogos
          </a>
         </nav>
        </div>
        <div class="col-md-6">
         <nav>
-         <a href="/nosotros">
+         <a href="../nosotros/index.html">
           Nosotros
          </a>
-         <a href="/pages\quiero-ser-cliente\index.html">
+         <a href="../quiero-ser-cliente/index.html">
           Quiero ser cliente
          </a>
-         <a href="/pages\sumate-al-equipo\index.html">
+         <a href="../sumate-al-equipo/index.html">
           Sumate al equipo
          </a>
-         <a href="/posventa">
+         <a href="../posventa/index.html">
           Posventa
          </a>
-         <a href="/pages\contacto\index.html">
+         <a href="../contacto/index.html">
           Contacto
          </a>
          <a class="color-orange" href="http://b2blusqtoff.kiri.cc" target="_blank">
@@ -553,25 +553,25 @@
   </footer>
   <!-- ./footer -->
   <!-- js -->
-  <script src="/js/bootstrap.bundle.min.js" type="text/javascript">
+  <script src="../../js/bootstrap.bundle.min.js" type="text/javascript">
   </script>
-  <script src="/js/jquery.min.js" type="text/javascript">
+  <script src="../../js/jquery.min.js" type="text/javascript">
   </script>
-  <script src="/js/fancybox.umd.js" type="text/javascript">
+  <script src="../../js/fancybox.umd.js" type="text/javascript">
   </script>
-  <script src="/js/sweetalert2@11" type="text/javascript">
+  <script src="../../js/sweetalert2@11" type="text/javascript">
   </script>
-  <script src="/js/flickity.pkgd.min.js" type="text/javascript">
+  <script src="../../js/flickity.pkgd.min.js" type="text/javascript">
   </script>
-  <script src="/js/swiper-bundle.min.js" type="text/javascript">
+  <script src="../../js/swiper-bundle.min.js" type="text/javascript">
   </script>
-  <script src="/js/matchHeight-min.js" type="text/javascript">
+  <script src="../../js/matchHeight-min.js" type="text/javascript">
   </script>
-  <script src="/js/typeahead.bundle.min.js" type="text/javascript">
+  <script src="../../js/typeahead.bundle.min.js" type="text/javascript">
   </script>
-  <script src="/js/common.js" type="text/javascript">
+  <script src="../../js/common.js" type="text/javascript">
   </script>
-  <script src="/js/whatsapp-button.js" type="text/javascript">
+  <script src="../../js/whatsapp-button.js" type="text/javascript">
   </script>
  </body>
 </html>
