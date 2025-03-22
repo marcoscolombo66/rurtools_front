@@ -11,29 +11,29 @@ function crearHTMLCategoria(categoria) {
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>${categoria.nombreCategoria} - RUR Tools</title>
     <!-- favicon -->
-    <link href="/2023/pics/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-    <link href="/2023/pics/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-    <link href="/2023/pics/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-    <link href="/2023/pics/favicon/site.webmanifest" rel="manifest"/>
-    <link color="#5bbad5" href="/2023/pics/favicon/safari-pinned-tab.svg" rel="mask-icon"/>
+    <link href="../../2023/pics/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="../../2023/pics/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="../../2023/pics/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="../../2023/pics/favicon/site.webmanifest" rel="manifest"/>
+    <link color="#5bbad5" href="../../2023/pics/favicon/safari-pinned-tab.svg" rel="mask-icon"/>
     <meta content="#da532c" name="msapplication-TileColor"/>
     <meta content="#ffffff" name="theme-color"/>
     <!-- fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="/css/css2" rel="stylesheet"/>
+    <link href="../../css/css2" rel="stylesheet"/>
     <!-- font-awesome -->
-    <link href="/css/fontawesome.min.css" rel="stylesheet"/>
-    <link href="/css/brands.min.css" rel="stylesheet"/>
-    <link href="/css/solid.min.css" rel="stylesheet"/>
+    <link href="../../css/fontawesome.min.css" rel="stylesheet"/>
+    <link href="../../css/brands.min.css" rel="stylesheet"/>
+    <link href="../../css/solid.min.css" rel="stylesheet"/>
     <!-- css -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/css/fancybox.css" rel="stylesheet"/>
-    <link href="/css/flickity.css" rel="stylesheet"/>
-    <link href="/css/swiper-bundle.min.css" rel="stylesheet"/>
-    <link href="/css/common.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../css/fancybox.css" rel="stylesheet"/>
+    <link href="../../css/flickity.css" rel="stylesheet"/>
+    <link href="../../css/swiper-bundle.min.css" rel="stylesheet"/>
+    <link href="../../css/common.min.css" rel="stylesheet"/>
     <!-- js -->
-    <script src="/js/api.js"></script>
+    <script src="../../js/api.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {
@@ -43,8 +43,8 @@ function crearHTMLCategoria(categoria) {
                 if (productos && productos.length > 0) {
                     contenedor.innerHTML = productos.map(producto => \`
                         <div class="col-6 col-lg-4 col-xl-3">
-                            <a class="prod-link" href="/pages/ver-productos/producto/\${producto.sku}/index.html">
-                                <div class="image" style="background-image:url('\${producto.imagen || '/images2/images/logo_rur.png'}');">
+                            <a class="prod-link" href="../producto/\${producto.sku}/index.html">
+                                <div class="image" style="background-image:url('\${producto.imagen || '../../../images2/images/logo_rur.png'}');">
                                 </div>
                                 <div class="name" data-mh="product">
                                     \${producto.nombre}
@@ -75,70 +75,74 @@ function crearHTMLCategoria(categoria) {
 </head>
 <body>
     <!-- header -->
-    <header>
-        <a class="brand" href="/home">
-            <img alt="RUR Tools" class="img-fluid" src="/images2/images/logo_rur.png"/>
-        </a>
-        <!-- nav -->
-        <nav>
-            <a href="/pages/ver-productos/index.html">Productos</a>
-            <a href="/pages/donde-comprar/index.html">Dónde comprar</a>
-            <a href="/pages/servicios-tecnicos/index.html">Servicios técnicos</a>
-            <button class="btn-nav" type="button">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <button class="btn-search" type="button">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </nav>
-    </header>
-
-    <!-- section-hero -->
-    <section class="section-hero bg-orange">
-        <img alt="" class="img-fluid d-none d-md-block" src="/images2/images/banner-productos.jpg"/>
-        <img alt="" class="img-fluid d-md-none" src="/images2/images/banner-productos-mobile.jpg"/>
-    </section>
-
-    <!-- products -->
-    <section class="section bg-orange bg-dots">
-        <div class="container">
-            <div class="section-header mb-4">
-                <h1 class="categoria-titulo color-white mb-0">${categoria.nombreCategoria}</h1>
-                <form action="/buscar" class="search" method="get">
-                    <div class="input-group section-search">
-                        <input class="form-control" id="s" name="s" placeholder="Buscar producto..." type="text" value=""/>
-                        <button class="btn btn-dark" type="submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
+    <header class="border-bottom">
+        <div class="container-fluid container-lg">
+            <div class="row">
+                <div class="col d-flex align-items-center justify-content-between">
+                    <div class="header-brand">
+                        <a href="../../index.html">
+                            <img alt="RUR Tools" class="img-fluid" src="../../images2/images/logo_rur.png"/>
+                        </a>
                     </div>
-                </form>
-            </div>
-            <div class="row justify-content-center">
-                <!-- Los productos se cargarán aquí dinámicamente -->
+                    <div class="header-actions">
+                        <a class="btn-search" href="#">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </a>
+                        <a class="btn-nav d-flex d-lg-none" href="#">
+                            <i class="fa-solid fa-bars"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </header>
+    <!-- ./header -->
+
+    <!-- main -->
+    <main>
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h1 class="color-white">${categoria.nombreCategoria}</h1>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <p>Cargando productos...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- ./main -->
 
     <!-- footer -->
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-4 col-lg-3">
-                    <h5>Contacto</h5>
-                    <p><a href="mailto:info@rurtools.com">info@rurtools.com</a></p>
+                <div class="col">
+                    <h5>RUR Tools</h5>
+                    <p>
+                        <a href="mailto:info@rurtools.com.ar">
+                            info@rurtools.com.ar
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
     </footer>
+    <!-- ./footer -->
 
     <!-- js -->
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/fancybox.umd.js"></script>
-    <script src="/js/flickity.pkgd.min.js"></script>
-    <script src="/js/swiper-bundle.min.js"></script>
-    <script src="/js/matchHeight-min.js"></script>
-    <script src="/js/common.js"></script>
+    <script src="../../js/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <script src="../../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../js/fancybox.umd.js" type="text/javascript"></script>
+    <script src="../../js/sweetalert2@11" type="text/javascript"></script>
+    <script src="../../js/flickity.pkgd.min.js" type="text/javascript"></script>
+    <script src="../../js/swiper-bundle.min.js" type="text/javascript"></script>
+    <script src="../../js/matchHeight-min.js" type="text/javascript"></script>
+    <script src="../../js/common.js" type="text/javascript"></script>
 </body>
 </html>`;
 }

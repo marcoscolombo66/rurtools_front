@@ -143,8 +143,8 @@ async function renderizarCategorias() {
         console.log('Renderizando categorías:', categorias);
         contenedor.innerHTML = categorias.map(categoria => `
             <div class="col-6 col-lg-4 col-xl-3">
-                <a class="cat-link" href="/pages/ver-productos/${categoria.idCategoria}-${categoria.nombreCategoria.toLowerCase().replace(/\s+/g, '-')}/index.html">
-                    <div class="image" style="background-image:url('${categoria.imagen || '/images2/images/logo_rur.png'}');">
+                <a class="cat-link" href="pages/ver-productos/${categoria.idCategoria}-${categoria.nombreCategoria.toLowerCase().replace(/\s+/g, '-')}/index.html">
+                    <div class="image" style="background-image:url('${categoria.imagen || 'images2/images/logo_rur.png'}');">
                     </div>
                     <div class="name">
                         ${categoria.nombreCategoria}
@@ -173,8 +173,8 @@ async function renderizarProductosCategoria(categoriaId) {
 
     contenedor.innerHTML = productos.map(producto => `
         <div class="col-6 col-lg-4 col-xl-3">
-            <a class="prod-link" href="/pages/ver-producto/${producto.sku}/index.html">
-                <div class="image" style="background-image:url('${producto.imagen || '/images2/images/logo_rur.png'}');">
+            <a class="prod-link" href="pages/ver-producto/${producto.sku}/index.html">
+                <div class="image" style="background-image:url('${producto.imagen || 'images2/images/logo_rur.png'}');">
                 </div>
                 <div class="name" data-mh="product">
                     ${producto.nombre}
@@ -199,7 +199,7 @@ async function renderizarProductosCategoria(categoriaId) {
 // Función para crear el HTML de una categoría
 async function crearHTMLCategoria(categoria) {
     const nombreCarpeta = `${categoria.idCategoria}-${categoria.nombreCategoria.toLowerCase().replace(/\s+/g, '-')}`;
-    const rutaCategoria = `/pages/ver-productos/${nombreCarpeta}`;
+    const rutaCategoria = `pages/ver-productos/${nombreCarpeta}`;
     
     // Crear el contenido HTML
     const contenidoHTML = `
@@ -210,7 +210,7 @@ async function crearHTMLCategoria(categoria) {
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>${categoria.nombreCategoria} - RUR Tools</title>
     <!-- Resto de los meta tags y CSS -->
-    <script src="/js/api.js"></script>
+    <script src="../../js/api.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {
@@ -220,8 +220,8 @@ async function crearHTMLCategoria(categoria) {
                 if (productos && productos.length > 0) {
                     contenedor.innerHTML = productos.map(producto => \`
                         <div class="col-6 col-lg-4 col-xl-3">
-                            <a class="prod-link" href="/pages/ver-productos/producto/${producto.sku}/index.html">
-                                <div class="image" style="background-image:url('\${producto.imagen || '/images2/images/logo_rur.png'}');">
+                            <a class="prod-link" href="../producto/${producto.sku}/index.html">
+                                <div class="image" style="background-image:url('\${producto.imagen || '../../../images2/images/logo_rur.png'}');">
                                 </div>
                                 <div class="name" data-mh="product">
                                     \${producto.nombre}
